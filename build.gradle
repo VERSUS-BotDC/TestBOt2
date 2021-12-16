@@ -1,0 +1,53 @@
+plugins {
+    id 'java'
+    id 'application'
+}
+
+mainClassName = 'ru.bot.Bot'
+
+group 'org.example'
+version '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+compileJava.options.encoding = 'UTF-8'
+
+tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8'
+}
+
+tasks.create("stage") {
+    dependsOn("installDist")
+
+}
+
+jar {
+    manifest {
+        attributes(
+                'Main-Class': 'ru.bot.Bot')
+    }
+}
+
+dependencies {
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.7.0'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.7.0'
+    implementation group: 'com.vk.api', name: 'sdk', version: '1.0.11'
+    implementation('org.jsoup:jsoup:1.13.1')
+    implementation group: 'org.slf4j', name: 'slf4j-jdk14', version: '1.7.22'
+    //Binding for Log4J -->
+    implementation group: 'org.apache.logging.log4j', name: 'log4j-slf4j-impl', version: '2.7'
+    implementation group:'org.xerial', name:'sqlite-jdbc', version:'3.8.11.2'
+
+//Log4j API and Core implementation required for binding
+    implementation group: 'org.apache.logging.log4j', name: 'log4j-api', version: '2.7'
+    implementation group: 'org.apache.logging.log4j', name: 'log4j-core', version: '2.7'
+    implementation group: 'org.apache.logging.log4j', name: 'log4j-core', version: '2.7'
+}
+
+
+
+test {
+    useJUnitPlatform()
+}
